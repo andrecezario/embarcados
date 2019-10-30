@@ -17,7 +17,7 @@ int smart_house_device_init(device *home_d, char *user, char wifi, unsigned int 
     home_d->mode = '1';
     home_d->current_command.content = content;
 
-    return 0;
+    return 1;
 }
 
 void house_init(my_house *house)
