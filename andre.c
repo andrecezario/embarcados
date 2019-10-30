@@ -87,7 +87,6 @@ void smart_house_device_print(device *home_d)
 void smart_house_device_execute(device *home_d, my_house *house, char mode, command *cmd){
     if(smart_house_device_isconnected(home_d)) {
         char *space_house;
-        //cmd->app_command = {0};
         switch (mode) 
         {
         case VOICE: 
@@ -134,7 +133,7 @@ void smart_house_device_execute(device *home_d, my_house *house, char mode, comm
                 break;
             
             default:
-               
+               printf("[ERROR] something is wrong =(.\n");
                 break;
             }
 
@@ -163,7 +162,7 @@ void smart_house_device_print_binary_content(unsigned int cmd){
 }
 
 void smart_house_device_monitor(my_house *house){
-    printf("## MONITOR\n");
+    printf("\n## MONITOR\n");
     printf("# SALA");
     smart_house_space_print(house->room);
     printf("---------- * ----------\n");
@@ -176,17 +175,6 @@ void smart_house_device_monitor(my_house *house){
     printf("# BANHEIRO");
     smart_house_space_print(house->bwc);
     printf("---------- * ----------\n");
-
-    /* Elabore aqui um printf que siga a representacao abaixo: */
-    // ## MONITOR 
-    // # (AMBIENTE): 
-    // >> ILUMINÇÃO: (1 ou 0)
-    // >> SOM AMBIENTE: (1 ou 0)
-    // >> AR CONDICIONADO: (1 ou 0)
-    // >> JANELAS: (1 ou 0)
-    // >> PORTA: (1 ou 0)
-    // >> TV: (1 ou 0)
-    // ---------- * ----------
 }
 
 void smart_house_space_print(char *space) {
@@ -206,12 +194,12 @@ int main(int argc, char const *argv[])
     command cmd = {0};
 
     // Inicialize
-    smart_house_device_init(&home_d, "Andre", '1', cmd.content);
+    smart_house_device_init(&home_d, "Andre Luiz", '1', cmd.content);
     house_init(&house);
 
     // Verifique
     smart_house_device_print(&home_d);
-    //smart_house_device_monitor(&house);
+    smart_house_device_monitor(&house);
     
     // Obs.: Lembre-se sempre verificar se o dispositivo esta conectado ao wi-fi antes de executar alguma acao
     // Obs.: Seu codigo voz eh 101, sempre verifique antes de executar um comando de voz
@@ -220,9 +208,6 @@ int main(int argc, char const *argv[])
     // Comando de voz    
     /// (codigo de voz) : 101
     /// (comando) : 10100 == "ligar luzes da sala e abrir janela da cozinha"
-
-    cmd.content = 0;
-    //cmd.app_command = 0;
 
     cmd.voice_command.val = 0x05; //0x005->0b101 
     cmd.voice_command.interpret = 0x14; //0x014->0b10100
@@ -241,13 +226,9 @@ int main(int argc, char const *argv[])
     cmd.app_command.windows = 1;
     cmd.app_command.door = 0;
 
-    //cmd.content = (1<<LIGHTING) | (1<<SOUND) | (1<<WINDOWS) | (0<<DOOR);
-    //printf("\n%x",cmd.content);
-
     smart_house_device_execute(&home_d, &house, APP, &cmd);
     smart_house_device_monitor(&house);
 
-    
     // EXECUTE:
     // Comando de voz
     /// (codigo de voz) : 110
@@ -259,14 +240,11 @@ int main(int argc, char const *argv[])
     smart_house_device_execute(&home_d, &house, VOICE, &cmd);
     smart_house_device_monitor(&house);
 
-
-    /* EXECUTE:
+    // EXECUTE:
         // Comando de app
         // (ambiente): quarto
         /// ligar luz +  ar condicionado + fechar janela + abrir porta
-    // smart_house_device_execute();
-    // smart_house_device_monitor();
-    */
+ 
     app_command_init(&cmd);
     cmd.app_command.place_code = BEDROOM;
     cmd.app_command.lighting = 1;
@@ -276,11 +254,6 @@ int main(int argc, char const *argv[])
 
     smart_house_device_execute(&home_d, &house, APP, &cmd);
     smart_house_device_monitor(&house);
-
-    // EXECUTE:
-    // Comando de voz
-    /// (codigo de voz) : 101
-    /// (comando) : 01011 == "ligar luz do banheiro e fechar a porta"
 
     return 1;
 }
