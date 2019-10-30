@@ -57,5 +57,9 @@ void smart_house_device_print(device *home_d); // Imprimir status do sistema (no
 void smart_house_space_print(char *space); //Imprime status dos aparelhos do cômodo 
 
 int check_voice_code(unsigned int code);
+
+void space_init(char *space);
+
+void app_command_init(command *cmd);
 // [DICA] é permitido a criação de outras funcoes auxiliares para execucao dessas acima, isso talvez facilite
 // e deixe mais organizado o seu codigo.
