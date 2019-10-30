@@ -65,3 +65,5 @@ int check_voice_code(unsigned int code); //Checa codigo de voz
 void space_init(char *space); //Inicia valores padroes para comodos
 
 void app_command_init(command *cmd); //Inicia valores padroes do app command
+
+char int_char(unsigned int value); //Converte de int para char

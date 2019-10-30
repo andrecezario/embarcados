@@ -137,12 +137,12 @@ void smart_house_device_execute(device *home_d, my_house *house, char mode, comm
                 break;
             }
 
-            space_house[LIGHTING] = cmd->app_command.lighting+'0';
-            space_house[SOUND] = cmd->app_command.sound+'0';
-            space_house[AIR_CONDITIONING] = cmd->app_command.air_conditioning+'0';
-            space_house[WINDOWS] = cmd->app_command.windows+'0';
-            space_house[DOOR] = cmd->app_command.door+'0';
-            space_house[TV] = cmd->app_command.tv+'0';
+            space_house[LIGHTING] = int_char(cmd->app_command.lighting);
+            space_house[SOUND] = int_char(cmd->app_command.sound);
+            space_house[AIR_CONDITIONING] = int_char(cmd->app_command.air_conditioning);
+            space_house[WINDOWS] = int_char(cmd->app_command.windows);
+            space_house[DOOR] = int_char(cmd->app_command.door);
+            space_house[TV] = int_char(cmd->app_command.tv);
             break;
         
         default:
@@ -157,6 +157,9 @@ void smart_house_device_execute(device *home_d, my_house *house, char mode, comm
     }
 }
 
+char int_char(unsigned int value) {
+    return value+'0';
+}
 void smart_house_device_print_binary_content(unsigned int cmd){
 
 }
