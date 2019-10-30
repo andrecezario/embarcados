@@ -40,6 +40,7 @@ struct house{
     char bedroom[6];
     char kitchen[6];
 };
+
 typedef struct house my_house;
 
 int smart_house_device_init(device *home_d, char *user, char wifi, unsigned content); // Inicializar sistema
@@ -54,12 +55,13 @@ void smart_house_device_print_binary_content(unsigned int cmd); // Verificar o b
 
 void smart_house_device_print(device *home_d); // Imprimir status do sistema (nome do usuario e conexão)
 
-void smart_house_space_print(char *space); //Imprime status dos aparelhos do cômodo 
-
-int check_voice_code(unsigned int code);
-
-void space_init(char *space);
-
-void app_command_init(command *cmd);
 // [DICA] é permitido a criação de outras funcoes auxiliares para execucao dessas acima, isso talvez facilite
 // e deixe mais organizado o seu codigo.
+
+void smart_house_space_print(char *space); //Imprime status dos aparelhos do cômodo 
+
+int check_voice_code(unsigned int code); //Checa codigo de voz
+
+void space_init(char *space); //Inicia valores padroes para comodos
+
+void app_command_init(command *cmd); //Inicia valores padroes do app command
